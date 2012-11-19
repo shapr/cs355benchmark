@@ -1,7 +1,8 @@
 #include "BenchMark.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <iostream>
+using namespace std;
 /*
   arrays to sort for testing:
   sorted
@@ -10,8 +11,14 @@
   all same item
   zero size
  */
+
+int BenchMark::loopcounter = 0;
+int BenchMark::swapcounter = 0;
+
 BenchMark::BenchMark(int size){ // set the array size
   arraysize = size;
+
+  sortsizes = new int {10,100,1000,10000};
 
   // create the arrays
   revarray = new int [arraysize];
@@ -52,38 +59,54 @@ void BenchMark::clearStats(){
   swapcounter = 0;
 }
 
-void BenchMark::reportStats(){
-  printResults(); // is this right?
-}
+// void BenchMark::printResults(){
+//   // reportStats(); // is this right?
+//   cout << 
 
-void BenchMark::printResults(string arraytype, string sorttype){
-  cout << "for an array of type" << arraytype ;
+// }
+
+void BenchMark::reportStats(string arraytype, string sorttype){
+  cout << "for an array of type " << arraytype ;
   cout << " the sort of type" << sorttype ;
   cout << " had results:\n";
-  cout << loopcounter " times through the loop\n";
-  cout << swapcounter " swaps were required\n";
+  cout << loopcounter << " times through the loop\n";
+  cout << swapcounter << " swaps were required\n";
   cout << "This gives a loop ratio of " << arraysize << "/" << loopcounter << ".\n";
-  cout << "and a swap ratio of " << swapcounter "/" arraysize << ".\n";
+  cout << "and a swap ratio of " << arraysize << "/" << swapcounter << ".\n";
 }
 
 void BenchMark::runSorts(){
   clearStats();
   SelectionSort(randarray);
   reportStats("random","selection");
+  clearStats();
+  SelectionSort(revarray);
+  reportStats("reverse","selection");
+  clearStats();
+  SelectionSort(sortarray);
+  reportStats("sorted","selection");
+
 }
 
-void BenchMark::SelectionSort(int * arraytosort){
+
+void BenchMark::SelectionSort(){
+  for(int i = 0;i < sortsizelength;i++){
+    SelectionSortHelper(
+  }
+}
+void BenchMark::SelectionSortHelper(int * arraytosort){
+  // do we need to copy the array ourselves?
   int * a = new int [arraysize];
   for (int i = 0; i < arraysize; i++){
-    myarray[i] = arraytosort[i];
+    a[i] = arraytosort[i];
   }
 
   // void selectsort(int *& a,int n){
-  int minindex;
+  int minindex = 0;
   int min;
-  for(int i = 0; i < n; i++){
+  for(int i = 0; i < arraysize; i++){
     min = a[i];
-    for(int j = i + 1; j < n; j++){
+    for(int j = i + 1; j < arraysize; j++){
       loopcounter++;
       if(a[j] < min){
         min = a[j];
