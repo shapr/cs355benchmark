@@ -11,9 +11,7 @@ all: BenchDriver # fraction.o fracmain
 
 # abstractarray absary
 
-BenchDriver: BenchDriver.o
-
-BenchDriver.o: BenchDriver.h
+BenchDriver: BenchDriver.o BenchMark.o
 
 myprogram: abstractarray.o absary.o
 	$(CXX) $+ -o $@
