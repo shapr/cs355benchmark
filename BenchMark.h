@@ -3,11 +3,12 @@
 
 using namespace std;
 #include <string>
+#include <vector>
 
 class BenchMark{
  public:
   BenchMark(int size);
-  void runSorts();
+  void runSorts(int size);
   void printResults();
   void clearStats();
   void reportStats(string arraytype, string sorttype);
@@ -16,14 +17,16 @@ class BenchMark{
   void BubbleSort();
   void RadixSort();
   void QuickSort();
-  void SelectionSort(int * arraytosort);
+  void SelectionSort();
+  void SelectionSortHelper(int * arraytosort);
   void InsertionSort();
   void MergeSort();
   void setSortSizes(); // setSortSizes(1024,2048,4096);
+ protected:
+  void generateArrays(int size);
 
  private:
-  int sortsizelength;
-  int * sortsizes; // currently 10,100,1000,10000
+  vector<int> sortsizes;
   static int loopcounter;
   static int swapcounter;
   int arraysize; // the size of our arrays

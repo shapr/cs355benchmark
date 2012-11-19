@@ -18,9 +18,11 @@ int BenchMark::swapcounter = 0;
 BenchMark::BenchMark(int size){ // set the array size
   arraysize = size;
 
-  sortsizes = new int {10,100,1000,10000};
+}
 
+void BenchMark::generateArrays(int size){
   // create the arrays
+  arraysize = size;
   revarray = new int [arraysize];
   sortarray = new int [arraysize];
   randarray = new int [arraysize];
@@ -53,7 +55,6 @@ BenchMark::BenchMark(int size){ // set the array size
     }
   }
 }
-
 void BenchMark::clearStats(){
   loopcounter = 0;
   swapcounter = 0;
@@ -75,25 +76,58 @@ void BenchMark::reportStats(string arraytype, string sorttype){
   cout << "and a swap ratio of " << arraysize << "/" << swapcounter << ".\n";
 }
 
-void BenchMark::runSorts(){
+void BenchMark::runSorts(int size){
+  // generate arrays of the size we want
+  generateArrays(size);
+
+  revarray = new int [arraysize];
+  sortarray = new int [arraysize];
+  randarray = new int [arraysize];
+  duparray = new int [arraysize];
+  zeroarray = new int [0];
+  onearray = new int [1]; // does this work?
+
+  // run it all!
   clearStats();
-  SelectionSort(randarray);
+  SelectionSortHelper(randarray);
   reportStats("random","selection");
+
   clearStats();
-  SelectionSort(revarray);
-  reportStats("reverse","selection");
-  clearStats();
-  SelectionSort(sortarray);
+  SelectionSortHelper(sortarray);
   reportStats("sorted","selection");
 
+  clearStats();
+  SelectionSortHelper(revarray);
+  reportStats("reverse","selection");
+
+  clearStats();
+  SelectionSortHelper(duparray);
+  reportStats("duplicates","selection");
+
+  clearStats();
+  SelectionSortHelper(zeroarray);
+  reportStats("zero size","selection");
+
+  clearStats();
+  SelectionSortHelper(onearray);
+  reportStats("one element","selection");
+  
 }
 
 
 void BenchMark::SelectionSort(){
-  for(int i = 0;i < sortsizelength;i++){
-    SelectionSortHelper(
-  }
+  // loop through the vector, pick up the next size, run the sort with that size
+  //for(int i = 0;i < sortsizes.size();i++){
+    // generate the arrays of that size
+    // call SelectionSort on each of those arrays?
+    // no, we should already have our arrays of certain sizes, and then we just pass them in here
+    //  }
+  runSorts(10);
+  runSorts(100);
+  runSorts(1000);
+  runSorts(10000);
 }
+
 void BenchMark::SelectionSortHelper(int * arraytosort){
   // do we need to copy the array ourselves?
   int * a = new int [arraysize];
