@@ -7,20 +7,30 @@ using namespace std;
 
 class BenchMark{
  public:
-  BenchMark(int size);
-  void runSorts(int size);
+  BenchMark();
+  void runSelectionSorts(int size);
+  void runBubbleSorts(int size);
+  void runRadixSorts(int size);
+  void runQuickSorts(int size);
+  void runInsertionSorts(int size);
+  void runMergeSorts(int size);
   void printResults();
   void clearStats();
   void reportStats(string arraytype, string sorttype);
   void Setup(); // this makes a copy of the arrays before sorting
   // sorts go here
   void BubbleSort();
+  void BubbleSortHelper(int * arraytosort, int size);
   void RadixSort();
   void QuickSort();
+  void QuickSortHelper(int *& a, int left, int right);
   void SelectionSort();
-  void SelectionSortHelper(int * arraytosort);
+  void SelectionSortHelper(int * arraytosort, int size);
   void InsertionSort();
+  void InsertionSortHelper(int * arraytosort, int size);
   void MergeSort();
+  void MergeSortHelper(int *& a,int left, int right);
+  void merge(int *& a, int left, int mid, int right);
   void setSortSizes(); // setSortSizes(1024,2048,4096);
  protected:
   void generateArrays(int size);

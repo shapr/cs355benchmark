@@ -2,25 +2,59 @@
 #include <iostream>
 
 using namespace std;
-
+void PrintMenu();
 int main () {
-  BenchMark bm = BenchMark(10);
-  bm.SelectionSort();
-  // bm.runSorts();
-  // b10.printResults();
+    BenchMark bm = BenchMark();
+    PrintMenu();
+    char choice;
+    cin >> choice;
+    while(choice != 'E' && choice != 'e'){
+        switch(choice){
+             case 'H':
+             case 'h':
+                    PrintMenu();
+                    break;
+             case 'B':
+             case 'b':
+                  bm.BubbleSort();
+                  break;
+             case 'S':
+             case 's':
+                  bm.SelectionSort();
+                  break;
+             case 'I':
+             case 'i':
+                  bm.InsertionSort();
+                  break;
+             case 'M':
+             case 'm':
+                  bm.MergeSort();
+                  break;
+             case 'Q':
+             case 'q':
+                  bm.QuickSort();
+                  break;
+             case 'R':
+             case 'r':
+                  break;
+             default:
+                     cout << "INVALID CHOICE, Choose Again" << endl;
+        }
+    cin >> choice;
+    }
 
-  // BenchMark b100 = BenchMark(100);
-  // b100.runSorts();
-  // // b100.printResults();
-
-  // BenchMark b1000 = BenchMark(1000);
-  // b1000.runSorts();
-  // // b1000.printResults();
-
-  // BenchMark b10000 = BenchMark(10000);
-  // b10000.runSorts();
-  // // b10000.printResults();
-
-  cout << "That's all folks!";
+    // system("pause");
   return 0;
+}
+void PrintMenu(){
+     cout << "  Command Line Options" << endl;
+	 cout << "  H\tHelp: Show Comman Line Options" << endl;
+	 cout << "  B:  Test Bubble sort" << endl;
+	 cout << "  S:  Test Selection sort" << endl;
+	 cout << "  I:  Test Insertion sort" << endl;
+	 cout << "  M:  Test Merge sort" << endl;
+	 cout << "  Q:  Test Quick sort" << endl;
+	 cout << "  R:  Test Radix sort" << endl;
+     cout << "  E:  Exit the test program" << endl;
+	 cout << endl;
 }
