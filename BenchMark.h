@@ -20,14 +20,14 @@ class BenchMark{
   void Setup(); // this makes a copy of the arrays before sorting
   // sorts go here
   void BubbleSort();
-  void BubbleSortHelper(int * arraytosort, int size);
+  void BubbleSortHelper(int *& a, int size);
   void RadixSort();
   void QuickSort();
   void QuickSortHelper(int *& a, int left, int right);
   void SelectionSort();
-  void SelectionSortHelper(int * arraytosort, int size);
+  void SelectionSortHelper(int *& a, int size);
   void InsertionSort();
-  void InsertionSortHelper(int * arraytosort, int size);
+  void InsertionSortHelper(int *& a, int size);
   void MergeSort();
   void MergeSortHelper(int *& a,int left, int right);
   void merge(int *& a, int left, int mid, int right);

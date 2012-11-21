@@ -40,7 +40,14 @@ int main () {
              default:
                      cout << "INVALID CHOICE, Choose Again" << endl;
         }
+    cout<<endl;
+    cout<<endl;
+    cout<<endl;
+    cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+    cout<<"READY FOR NEXT TEST"<<endl;
+    cout<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
     cin >> choice;
+    cout<<endl;
     }
 
     // system("pause");

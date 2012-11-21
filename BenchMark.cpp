@@ -28,7 +28,7 @@ void BenchMark::generateArrays(int size){
   duparray = new int [arraysize];
   zeroarray = new int [0];
   onearray = new int [1]; // does this work?
-  
+
   // generate the arrays
   for(int i = 0; i < arraysize; i++){
     sortarray[i] = i;
@@ -42,7 +42,7 @@ void BenchMark::generateArrays(int size){
     duparray[arraysize - 1 - i] = i;
   }
 
-  // for our random array, copy the ascending array and then randomly swap items 
+  // for our random array, copy the ascending array and then randomly swap items
   // for at least half the number of items, let's hope that works!
   for (int i = 0; i < arraysize/2; i++){
     int a = rand() % arraysize;
@@ -53,6 +53,14 @@ void BenchMark::generateArrays(int size){
       randarray[b] = temp;
     }
   }
+
+  if(size < 101){
+          cout<< "Random array before sort"<<endl;
+          for(int i = 0; i < size; i++){
+                  cout<<randarray[i]<<"\t";
+          }
+          cout<<endl;
+  }
 }
 void BenchMark::clearStats(){
   loopcounter = 0;
@@ -61,16 +69,19 @@ void BenchMark::clearStats(){
 
 // void BenchMark::printResults(){
 //   // reportStats(); // is this right?
-//   cout << 
+//   cout <<
 
 // }
 
 void BenchMark::reportStats(string arraytype, string sorttype){
-  cout << sorttype << " sorting array of type " << arraytype << " ";
-  cout << loopcounter << " times through the loop required " ;
-  cout << swapcounter << " swaps \n";
-  cout << "This gives a loop ratio of " << arraysize << "/" << loopcounter;
-  cout << " and a swap ratio of " << arraysize << "/" << swapcounter << ".\n" << endl;
+  cout << "----------------------------------------------------------" << endl;
+  cout << "for an array of type " << arraytype ;
+  cout << " the sort of type" << sorttype ;
+  cout << " had results:\n";
+  cout << loopcounter << " times through the loop\n";
+  cout << swapcounter << " swaps were required\n";
+  cout << "This gives a loop ratio of " << arraysize << "/" << loopcounter << ".\n";
+  cout << "and a swap ratio of " << arraysize << "/" << swapcounter << ".\n" << endl;
   cout << "----------------------------------------------------------" << endl;
 }
 
@@ -78,29 +89,17 @@ void BenchMark::runSelectionSorts(int size){
   // generate arrays of the size we want
   generateArrays(size);
 
-/*  revarray = new int [arraysize];
-  sortarray = new int [arraysize];
-  randarray = new int [arraysize];
-  duparray = new int [arraysize];
-  zeroarray = new int [0];
-  onearray = new int [1];*/ // does this work?
 
   // run it all!
-
-  clearStats();
-  SelectionSortHelper(zeroarray, 0);
-  //reportStats("zero size","selection");
-
-  clearStats();
-  SelectionSortHelper(onearray, 1);
-  //reportStats("one element","selection");
-
-  clearStats();
-  SelectionSortHelper(duparray, size);
-  //reportStats("duplicates","selection");
-
   clearStats();
   SelectionSortHelper(randarray, size);
+  if(size < 101){
+          cout<< "Random array after sort"<<endl;
+          for(int i = 0; i < size; i++){
+                  cout<<randarray[i]<<"\t";
+          }
+          cout<<endl;
+  }
   reportStats("random","selection");
 
   clearStats();
@@ -110,7 +109,19 @@ void BenchMark::runSelectionSorts(int size){
   clearStats();
   SelectionSortHelper(revarray, size);
   reportStats("reverse","selection");
- 
+
+  clearStats();
+  SelectionSortHelper(duparray, size);
+  reportStats("duplicates","selection");
+
+/*  clearStats();
+  SelectionSortHelper(zeroarray, 0);
+  reportStats("zero size","selection");
+
+  clearStats();
+  SelectionSortHelper(onearray, 1);
+  reportStats("one element","selection");*/
+
 }
 
 
@@ -121,23 +132,29 @@ void BenchMark::SelectionSort(){
     // call SelectionSort on each of those arrays?
     // no, we should already have our arrays of certain sizes, and then we just pass them in here
     //  }
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runSelectionSorts(10);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runSelectionSorts(100);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runSelectionSorts(1000);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runSelectionSorts(10000);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
 }
 
-void BenchMark::SelectionSortHelper(int * arraytosort, int size){
+void BenchMark::SelectionSortHelper(int *& a, int size){
   // do we need to copy the array ourselves?
-  int * a = new int [size];
-  for (int i = 0; i < size; i++){
-    a[i] = arraytosort[i];
-  }
 
   // void selectsort(int *& a,int n){
   int minindex = 0;
@@ -159,33 +176,37 @@ void BenchMark::SelectionSortHelper(int * arraytosort, int size){
   }
 }
 void BenchMark::InsertionSort(){
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runInsertionSorts(10);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runInsertionSorts(100);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runInsertionSorts(1000);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runInsertionSorts(10000);
-  cout<<"**********************************************************"<<endl;
-}     
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
+}
 void BenchMark::runInsertionSorts(int size){
-  generateArrays(size);     
-
-  clearStats();
-  InsertionSortHelper(duparray, size);
-  // reportStats("duplicates","Insertion");
-
-  clearStats();
-  InsertionSortHelper(zeroarray, 0);
-  // reportStats("zero size","Insertion");
-
-  clearStats();
-  InsertionSortHelper(onearray, 1);
-  // reportStats("one element","Insertion");
-
+  generateArrays(size);
   clearStats();
   SelectionSortHelper(randarray, size);
+  if(size < 101){
+          cout<< "Random array after sort"<<endl;
+          for(int i = 0; i < size; i++){
+                  cout<<randarray[i]<<"\t";
+          }
+          cout<<endl;
+  }
   reportStats("random","Insertion");
 
   clearStats();
@@ -196,13 +217,20 @@ void BenchMark::runInsertionSorts(int size){
   InsertionSortHelper(revarray, size);
   reportStats("reverse","Insertion");
 
+  clearStats();
+  InsertionSortHelper(duparray, size);
+  reportStats("duplicates","Insertion");
 
-}     
-void BenchMark::InsertionSortHelper(int * arraytosort, int size){
-  int * a = new int [size];
-  for (int i = 0; i < size; i++){
-    a[i] = arraytosort[i];
-  }
+/*  clearStats();
+  InsertionSortHelper(zeroarray, 0);
+  reportStats("zero size","Insertion");
+
+  clearStats();
+  InsertionSortHelper(onearray, 1);
+  reportStats("one element","Insertion");*/
+
+}
+void BenchMark::InsertionSortHelper(int *& a, int size){
   int key,i;
   for(int j = 1; j < size; j++)
   {
@@ -217,35 +245,39 @@ void BenchMark::InsertionSortHelper(int * arraytosort, int size){
      a[i+1] = key;
      swapcounter++;
   }
-}     
+}
 void BenchMark::BubbleSort(){
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runBubbleSorts(10);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runBubbleSorts(100);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runBubbleSorts(1000);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runBubbleSorts(10000);
-  cout<<"**********************************************************"<<endl;
-}     
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
+}
 void BenchMark::runBubbleSorts(int size){
-  generateArrays(size);     
-
-  clearStats();
-  BubbleSortHelper(duparray, size);
-  // reportStats("duplicates","Bubble");
-
-  clearStats();
-  BubbleSortHelper(zeroarray, 0);
-  // reportStats("zero size","Bubble");
-
-  clearStats();
-  BubbleSortHelper(onearray, 1);
-  // reportStats("one element","Bubble");
-
+  generateArrays(size);
   clearStats();
   BubbleSortHelper(randarray, size);
+  if(size < 101){
+          cout<< "Random array after sort"<<endl;
+          for(int i = 0; i < size; i++){
+                  cout<<randarray[i]<<"\t";
+          }
+          cout<<endl;
+  }
   reportStats("random","Bubble");
 
   clearStats();
@@ -256,12 +288,20 @@ void BenchMark::runBubbleSorts(int size){
   BubbleSortHelper(revarray, size);
   reportStats("reverse","Bubble");
 
-} 
-void BenchMark::BubbleSortHelper(int * arraytosort, int size){
-  int * a = new int [size];
-  for (int i = 0; i < size; i++){
-    a[i] = arraytosort[i];
-  }
+  clearStats();
+  BubbleSortHelper(duparray, size);
+  reportStats("duplicates","Bubble");
+
+/*  clearStats();
+  BubbleSortHelper(zeroarray, 0);
+  reportStats("zero size","Bubble");
+
+  clearStats();
+  BubbleSortHelper(onearray, 1);
+  reportStats("one element","Bubble");*/
+
+}
+void BenchMark::BubbleSortHelper(int *& a, int size){
     int i,j,temp;
     for(i = 0; i < size; i++)
     {
@@ -279,33 +319,37 @@ void BenchMark::BubbleSortHelper(int * arraytosort, int size){
     }
 }
 void BenchMark::MergeSort(){
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runMergeSorts(10);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runMergeSorts(100);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runMergeSorts(1000);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runMergeSorts(10000);
-  cout<<"**********************************************************"<<endl;
-}     
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
+}
 void BenchMark::runMergeSorts(int size){
-  generateArrays(size);     
-
-  clearStats();
-  MergeSortHelper(duparray, 0, size - 1);
-  // reportStats("duplicates","Merge");
-
-  clearStats();
-  MergeSortHelper(zeroarray,0 , 0);
-  // reportStats("zero size","Merge");
-
-  clearStats();
-  MergeSortHelper(onearray,0 , 0);
-  // reportStats("one element","Merge");
-
+  generateArrays(size);
   clearStats();
   MergeSortHelper(randarray, 0, size - 1);
+  if(size < 101){
+          cout<< "Random array after sort"<<endl;
+          for(int i = 0; i < size; i++){
+                  cout<<randarray[i]<<"\t";
+          }
+          cout<<endl;
+  }
   reportStats("random","Merge");
 
   clearStats();
@@ -316,9 +360,21 @@ void BenchMark::runMergeSorts(int size){
   MergeSortHelper(revarray, 0, size - 1);
   reportStats("reverse","Merge");
 
-} 
+  clearStats();
+  MergeSortHelper(duparray, 0, size - 1);
+  reportStats("duplicates","Merge");
+
+/*  clearStats();
+  MergeSortHelper(zeroarray,0 , 0);
+  reportStats("zero size","Merge");
+
+  clearStats();
+  MergeSortHelper(onearray,0 , 0);
+  reportStats("one element","Merge");*/
+
+}
 void BenchMark::MergeSortHelper(int *& a,int left, int right){
-  int mid; 
+  int mid;
   if (right > left)
   {
     mid = (right + left) / 2;
@@ -333,7 +389,7 @@ void BenchMark::merge(int *& a, int left, int mid, int right){
   int i, left_end, num_elements, tmp_pos;
   left_end = (mid - 1);
   tmp_pos = left;
-  num_elements = (right - left + 1); 
+  num_elements = (right - left + 1);
   while ((left <= left_end) && (mid <= right)){
     loopcounter++;
     if (a[left] <= a[mid])
@@ -348,7 +404,7 @@ void BenchMark::merge(int *& a, int left, int mid, int right){
       tmp_pos++;
       mid++;
     }
-  } 
+  }
   while (left <= left_end){
     loopcounter++;
     temp[tmp_pos] = a[left];
@@ -368,33 +424,37 @@ void BenchMark::merge(int *& a, int left, int mid, int right){
   }
 }
 void BenchMark::QuickSort(){
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runQuickSorts(10);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runQuickSorts(100);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runQuickSorts(1000);
-  cout<<"**********************************************************"<<endl;
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
   runQuickSorts(10000);
-  cout<<"**********************************************************"<<endl;
-}     
+  cout<<endl;
+  cout<<"*************************************************************"<<endl;
+  cout<<endl;
+}
 void BenchMark::runQuickSorts(int size){
-  generateArrays(size);     
-
-  clearStats();
-  QuickSortHelper(duparray,0, size - 1);
-  // reportStats("duplicates","Quick");
-
-  clearStats();
-  QuickSortHelper(zeroarray,0, 0);
-  // reportStats("zero size","Quick");
-
-  clearStats();
-  QuickSortHelper(onearray, 0, 0);
-  // reportStats("one element","Quick");
-
+  generateArrays(size);
   clearStats();
   QuickSortHelper(randarray,0, size - 1);
+  if(size < 101){
+          cout<< "Random array after sort"<<endl;
+          for(int i = 0; i < size; i++){
+                  cout<<randarray[i]<<"\t";
+          }
+          cout<<endl;
+  }
   reportStats("random","Quick");
 
   clearStats();
@@ -404,6 +464,18 @@ void BenchMark::runQuickSorts(int size){
   clearStats();
   QuickSortHelper(revarray,0, size - 1);
   reportStats("reverse","Quick");
+
+  clearStats();
+  QuickSortHelper(duparray,0, size - 1);
+  reportStats("duplicates","Quick");
+
+/*  clearStats();
+  QuickSortHelper(zeroarray,0, 0);
+  reportStats("zero size","Quick");
+
+  clearStats();
+  QuickSortHelper(onearray, 0, 0);
+  reportStats("one element","Quick");*/
 
 }
 void BenchMark::QuickSortHelper(int *& a,int left, int right){
@@ -432,4 +504,55 @@ void BenchMark::QuickSortHelper(int *& a,int left, int right){
             QuickSortHelper(a, left, j);
       if (i < right)
             QuickSortHelper(a, i, right);
+}
+
+void BenchMark::generateRadixArrays(size){
+  // create the arrays
+  // for radix, all elements must have the same length
+  // thus size 10 is 0-9 and size 100 is 00-99, etc
+
+  arraysize = size;
+  revarray = new string [arraysize];
+  sortarray = new string [arraysize];
+  randarray = new string [arraysize];
+  duparray = new string [arraysize];
+  // zeroarray = new int [0];
+  // onearray = new int [1]; // does this work?
+
+  // generate the numbers, then turn them into a string
+  for(int i = 0; i < arraysize; i++){
+    sortarray[i] = i;
+    duparray[i] = i; // will add duplicates later
+    randarray[i] = i; // will randomize later
+    revarray[arraysize - 1 - i] = i;
+  }
+
+  // duparray is half count up, half count down
+  for (int i = 0; i < arraysize/2; i++){
+    duparray[arraysize - 1 - i] = i;
+  }
+
+  // for our random array, copy the ascending array and then randomly swap items
+  // for at least half the number of items, let's hope that works!
+  for (int i = 0; i < arraysize/2; i++){
+    int a = rand() % arraysize;
+    int b = rand() % arraysize;
+    if (a != b){
+      int temp = randarray[a];
+      randarray[a] = randarray[b];
+      randarray[b] = temp;
+    }
+  }
+
+  if(size < 101){
+          cout<< "Random array before sort"<<endl;
+          for(int i = 0; i < size; i++){
+                  cout<<randarray[i]<<"\t";
+          }
+          cout<<endl;
+  }
+}
+
+void BenchMark::runRadixSort(int size){
+  generateRadixArrays(size);
 }
